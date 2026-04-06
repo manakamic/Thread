@@ -102,8 +102,8 @@ bool Mandelbrot::StartThread() {
 
         auto& control = controls[i];
 
-        control.task = std::move(task);
         std::lock_guard lock(control.mutex);
+        control.task = std::move(task);
         control.conditionVariable.notify_one();
     }
 
