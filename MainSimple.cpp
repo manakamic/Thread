@@ -123,6 +123,11 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
         cgHandle = -1;
     }
 
+    if (-1 != softHandle) {
+        DeleteSoftImage(softHandle);
+        softHandle = -1;
+    }
+
     DxLib_End();
 
     return 0;
