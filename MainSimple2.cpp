@@ -78,7 +78,7 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
 
     // 本 cpp のメイン変数
     auto startThreads = false;
-    auto allThreadFinised = false;
+    auto allThreadFinished = false;
 
     SetDrawScreen(DX_SCREEN_BACK);
 
@@ -95,10 +95,10 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
         }
 
         // 全スレッドの処理完了をチェックする
-        if (!allThreadFinised && startThreads) {
-            allThreadFinised = CheckThreadFinished(threadFinished);
+        if (!allThreadFinished && startThreads) {
+            allThreadFinished = CheckThreadFinished(threadFinished);
 
-            if (allThreadFinised) {
+            if (allThreadFinished) {
                 cgHandle = CreateSoftImageFromGraph(softHandle, pixelArray);
             }
         }
@@ -108,13 +108,13 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
             startThreads = CreateThread(threadNum, threads, threadFinished, pixelArray);
         }
 
-        if (!allThreadFinised && startThreads) {
+        if (!allThreadFinished && startThreads) {
             threadFrameCount++; // スレッド処理中のフレーム数をカウント
         }
 
         ClearDrawScreen();
 
-        if ((-1 != cgHandle) && allThreadFinised) {
+        if ((-1 != cgHandle) && allThreadFinished) {
             DrawGraph(0, 0, cgHandle, FALSE);
         }
 
@@ -164,7 +164,7 @@ void MandelbrotThreadTask(std::stop_token stopToken, const int startY, const int
     }
 }
 
-// std::stpp_token を使用してスレッドを終了させる
+// std::stop_token を使用してスレッドを終了させる
 void StopTasks(std::vector<std::jthread>& threads) {
     for (auto&& thread : threads) {
         thread.request_stop();

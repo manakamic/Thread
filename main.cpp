@@ -65,7 +65,7 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
     std::vector<std::future<void>> futures; // std::async + std::future を使用する方法
 
     auto startThreads = false;
-    auto allThreadFinised = false;
+    auto allThreadFinished = false;
 
     SetDrawScreen(DX_SCREEN_BACK);
 
@@ -82,10 +82,10 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
         }
 
         // 全スレッドの処理完了をチェックする
-        if (!allThreadFinised && startThreads) {
-            allThreadFinised = CheckThreadFinished(futures);
+        if (!allThreadFinished && startThreads) {
+            allThreadFinished = CheckThreadFinished(futures);
 
-            if (allThreadFinised) {
+            if (allThreadFinished) {
                 cgHandle = CreateSoftImageFromGraph(softHandle, pixelArray);
             }
         }
@@ -95,13 +95,13 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
             startThreads = CreateThread(threadNum, futures, pixelArray);
         }
 
-        if (!allThreadFinised && startThreads) {
+        if (!allThreadFinished && startThreads) {
             threadFrameCount++; // スレッド処理中のフレーム数をカウント
         }
 
         ClearDrawScreen();
 
-        if ((-1 != cgHandle) && allThreadFinised) {
+        if ((-1 != cgHandle) && allThreadFinished) {
             DrawGraph(0, 0, cgHandle, FALSE);
         }
 
