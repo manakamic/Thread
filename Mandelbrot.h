@@ -102,7 +102,7 @@ public:
         pixelWidth{ pixelWidth }, pixelHeight{ pixelHeight },
         threadNum{ threadNum },
         controls{ static_cast<unsigned int>(threadNum) },
-        workerThreads{ static_cast<unsigned int>(threadNum) } {}
+        workerThreads{} {}
     virtual ~Mandelbrot();
 
     bool Initialize();
