@@ -55,7 +55,6 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
     // •`‰æŠÖ˜A‚Ì•Ï”
     auto threadFrameCount = 0;
     auto strColor = GetColor(255, 255, 255);
-    auto cgHandle = -1;
 
     while (ProcessMessage() != -1) {
         if (1 == CheckHitKey(KEY_INPUT_ESCAPE)) {
@@ -67,9 +66,7 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
             allThreadFinished = mandelbrotWorker->CheckThreadFinished();
 
             if (allThreadFinished) {
-                if (mandelbrotWorker->CreateSoftImageFromGraph()) {
-                    cgHandle = mandelbrotWorker->GetCgHandle();
-                }
+                mandelbrotWorker->CreateSoftImageFromGraph();
             }
         }
 
@@ -92,8 +89,8 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
 
         ClearDrawScreen();
 
-        if ((-1 != cgHandle) && allThreadFinished) {
-            DrawGraph(0, 0, cgHandle, FALSE);
+        if ((-1 != mandelbrotWorker->GetCgHandle()) && allThreadFinished) {
+            DrawGraph(0, 0, mandelbrotWorker->GetCgHandle(), FALSE);
         }
 
         DrawFormatString(10, 10, strColor, _T("Thread Num(%d) : Thread Frame(%d)"), threadNum, threadFrameCount);
